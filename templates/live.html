@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+<p>Generation: {{ count }}</p>
+{% block app_content %}
+
+        <a href="{{ url_for('home') }}" class="btn btn-warning home">Home</a>
+        <a href="{{ url_for('live') }}" class="btn btn-info refresh">Refresh</a>
+        <a href="#" class="btn btn-info refresh">Generation: {{ game.count }}</a>
+
+
+    <table class="world">
+
+        {% for i in range(height) %}
+            <tr>
+                {% for j in range(width) %}
+                    {% if game.world[i][j] %}
+                        <td class="cell living-cell"></td>
+                    {% elif game.count > 1 and game.old_world[i][j] %}
+                        <td class="cell dead-cell"></td>
+                    {% else %}
+                        <td class="cell"></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+        setInterval( () => window.location.reload(), 2000 );
+    </script>
+{% endblock %}
